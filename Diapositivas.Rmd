@@ -1,0 +1,138 @@
+---
+title: "Generación de informes reproducibles con RMarkdown"
+author: "Mg. Jesús Eduardo Gamboa Unsihuay"
+date: "05/12/2020"
+output:
+  beamer_presentation:
+    slide_level: 2
+    toc: yes
+    theme: Frankfurt
+    fonttheme: structurebold
+    keep_tex: yes
+  slidy_presentation: default
+  ioslides_presentation: default
+#titlegraphic: unalm.png
+subtitle: Día del estadístico peruano
+#institute: Universidad Nacional Agraria La Molina
+classoption: aspectratio=169
+header-includes:
+- \definecolor{greeen}{RGB}{66,144,94}
+- \setbeamercolor{palette primary}{use=structure,fg=white,bg=greeen}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introducción
+
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{reproducible.jpg}
+\end{figure}
+
+\begin{center}
+https://www.youtube.com/watch?v=s3JldKoA0zw
+\end{center}
+
+# Proyectos en RStudio
+
+Reflexionemos acerca de nuestro modo de trabajo en RStudio:
+
+1. ¿Tus datos son 'vecinos' de tus scripts?
+
+2. ¿Cómo lees conjuntos de datos?
+
+3. ¿Cargas el espacio de trabajo al iniciar sesión? ¿lo guardas al finalizar?
+
+
+***
+### Los datos como 'vecinos' de los scripts
+
+- Evitar casos como este:
+
+  \begin{center}
+  \texttt{read.csv("C:/Documentos/Curso Regresion/Trabajo 1/datos.csv")}
+  \texttt{read.delim("clipboard")}
+  \end{center}
+
+- Datos vecinos de los scripts $\rightarrow$ facilitará la lectura.
+
+- No será necesario indicar la ruta:
+
+  \begin{center}
+  \texttt{read.csv("datos.csv")}
+  \end{center}
+
+***
+### Lectura de datos
+
+Ejemplo:
+
+```{r}
+datos <- read.csv2("datos.csv", dec = ".")
+datos
+```
+
+
+***
+### Manipulación de datos
+
+- Use R para limpiar, transformar y manipular conjuntos de datos
+
+- Funciones de manipulación en el paquete **dplyr**: filter, select, mutate, etc.
+
+```{r message=F}
+library(dplyr)
+datos2 <- datos %>% 
+  mutate(Z = Y - X)
+```
+
+
+***
+### No cargar ni guardar espacio de trabajo
+
+- Guardar códigos en vez de almacenar el espacio de trabajo
+
+- De ser necesario almacenar un objeto, hacerlo en formato RDS en vez de Rda o RData
+
+- Ejemplo:
+
+```{r}
+modelo <- lm(Y ~ X, data = datos)
+saveRDS(modelo, "modeloRL.RDS")
+```
+
+***
+## Exportando objetos
+
+```{r message=F, warning=F}
+write.csv(datos2,"datos2.csv")
+library(ggplot2)
+imagen = ggplot(datos, aes(X,Y)) +
+  geom_point() + theme_minimal()
+ggsave("imagen.png",imagen)
+```
+
+***
+## Algunos puntos adicionales
+
+- No colocar **install.packages("...")** en código reproducible.
+
+- Los proyectos son el punto de partida para la creación de paquetes
+
+
+# Trabajando con RMarkdown
+
+- Documentos $\rightarrow$ HTML, PDF, Word
+
+- Presentaciones $\rightarrow$ HTML, PDF, Power Point
+
+- Flexdashboard (flexdashboard)
+
+- Shiny (shiny)
+
+- Tutorial (learnr)
+
+- Blog (distill)
+
+- Libro (bookdown)

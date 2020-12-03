@@ -1,0 +1,46 @@
+---
+title: "Documento 1"
+author: "Jesús E. Gamboa U."
+date: "5/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Lectura
+
+```{r}
+datos = read.csv2("datos.csv", dec = ".")
+```
+
+## Manipulación
+
+```{r message=F, warning=F}
+library(dplyr)
+datos2 = datos %>% 
+  mutate(Z = Y-X)
+```
+
+## Análisis exploratorio
+
+```{r message=F, warning=F}
+library(GGally)
+ggpairs(datos2, title="Correlacion")
+```
+
+## Modelamiento
+
+```{r message=F, warning=F}
+library(kableExtra)
+modelo = lm(Y ~ X, data = datos)
+modelo$coefficients %>% 
+  kable("html", digits=3) %>% 
+  kable_styling(full_width = F)
+```
+
+
+
+
