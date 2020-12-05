@@ -18,6 +18,8 @@ datos = read.csv2("datos.csv", dec = ".")
 
 ## Manipulación
 
+Manipulación de datos usando el paquete dplyr
+
 ```{r message=F, warning=F}
 library(dplyr)
 datos2 = datos %>% 

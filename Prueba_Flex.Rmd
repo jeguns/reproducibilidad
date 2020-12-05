@@ -1,0 +1,160 @@
+---
+title: "Análisis de tiempos de vida - Ejercicios"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    theme: cerulean
+    source_code: embed
+
+---
+
+30 de noviembre - A
+=======================
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Ejercicio 1
+
+Si en una cohorte de mujeres sanas se sabe que $l_{30}=204314$, $l_{31}=204300$ y $l_{32}=204280$, calcule e interprete $d_{31}$ y $q_{31}$.
+
+Sol: $d_{31}=l_{31}-l_{32}=204300-204280=20$, se espera que 20 personas fallezcan teniendo 31 años (no llegan a cumplir 32)
+
+$q_{31}=\frac{d_{31}}{l_{31}} = \frac{20}{204300} = 0.000097895$
+
+### Ejercicio 2
+
+¿Qué es más probable que suceda en el año 2020?
+
+- Que un hombre sano de 41 años fallezca antes de los 81 años
+
+- Que un hombre inválido de 41 años fallezca teniendo 81 o más años
+
+```{r,message=FALSE,echo=T}
+library(lifecontingencies)
+Tabla  = read.table("TMSPP2017.txt",T)
+probas = as.vector(Tabla$SPPS2017H*(1-Tabla$AaxH)^3)
+Tabla1 = probs2lifetable(probs = probas,
+                         radix = 10^6,
+                         type = "qx",
+                         name = "Tabla1")
+qxt(Tabla1,x=41,t=40)
+probas = as.vector(Tabla$SPPI2017H*(1-Tabla$AaxH)^3)
+Tabla2 = probs2lifetable(probs = probas,
+                         radix = 10^6,
+                         type = "qx",
+                         name = "Tabla2")
+pxt(Tabla2,x=41,t=40)
+```
+
+Entonces, se tiene que $_{40}q_{41}=0.327$ es mayor que $_{40}p_{41}=0.265$
+
+### Ejercicio 3
+
+¿Qué es menos probable que suceda en el año 2020?
+
+- Que una mujer inválida de 50 años fallezca teniendo 60 años
+
+- Que una mujer inválida de 50 años viva al menos hasta los 70 años
+
+### Ejercicio 4
+
+Calcule la probabilidad de que en el año 2021 una mujer sana de 47 años fallezca teniendo al menos 50 pero menos de 70 años
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Ejercicio 5
+
+Calcule e interprete para una mujer sana en el 2020: $P(K(28)=34)$
+
+### Ejercicio 6
+
+Calcule la probabilidad de que el año 2021 una mujer inválida de 38 años viva al menos hasta el 2023.
+
+### Ejercicio 7
+
+Calcule e interprete $_{30}p_{10}$ para un hombre sano en el 2021.
+
+### Ejercicio 8
+
+Calcule la probabilidad de que un hombre sano de 39 años (en el 2021) fallezca teniendo 49.
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Ejercicio 9
+
+Calcule la probabilidad de que en el año 2021, una mujer sana de 50 años fallezca teniendo 60 o menos años.
+
+### Ejercicio 10
+
+Si en una cohorte de mujeres sanas, $S(34)=0.8439$ y $S(35)=0.8349$. Calcule e interprete $p_{34}$.
+
+### Ejercicio 11
+
+Compare la probabilidad de que una mujer sana de 44 años fallezca antes de cumplir 80:
+
+- en el año 2010
+
+- en el año 2020
+
+### Ejercicio 12
+
+Calcule e interprete $_{10}q_{30}$ para una mujer sana en el año 2020
+
+30 de noviembre - B
+=======================
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Ejercicio 13
+
+Calcule la probabilidad de que en el año 2020, un hombre inválido de 42 años fallezca antes de cumplir 49.
+
+
+### Ejercicio 14
+
+Calcule la probabilidad de que en el año 2020, una mujer sana de 40 años fallezca habiendo cumplido 50 años o más.
+
+### Ejercicio 15
+
+Calcule e interprete $_{30|}q_{10}$ para una mujer inválida en el año 2021.
+
+### Ejercicio 16
+
+Calcule e interprete $_{15|10}q_{42}$ para un hombre inválido en el año 2020.
+
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Ejercicio 17
+Si en una cohorte de mujeres sanas, $l_{51}=280412$, $d_{51}=140$, $d_{49}=136$ y $d_{50}=138$ entonces calcule e inteprete $l_{49}$
+
+### Ejercicio 18
+Calcule la probabilidad de que en el año 2020, un hombre sano de 40 años viva  al menos hasta los 60.
+
+### Ejercicio 19
+Calcule la probabilidad de que el tiempo de vida restante de una señora sana de 62 años en el 2020 sea igual a 15 años.
+
+### Ejercicio 20
+
+Calcule e interprete $P(K(28)=34)$ para una mujer sana en el año 2020.
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Ejercicio 21
+Calcule la probabilidad de que en el año 2020 una mujer inválida de 50 años fallezca teniendo más de 55 pero 71 o menos años.
+
+### Ejercicio 22 
+Calcule e interprete $P(K(65)=35)$ para un hombre sano en el 2020.
+
+### Ejercicio 23
+Calcule la probabilidad de que en el 2020 un hombre inválidode 38 años fallezca teniendo 50, 51 o 52 años.
+
+### Ejercicio 24
+Si en una cohorte de hombres sanos en el 2020 se sabe que $q_{30}=0.001$ y $p_{31}=0.998$, calcule e interprete $_{1|}q_{30}$
